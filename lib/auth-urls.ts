@@ -4,7 +4,7 @@ function appOrigin() {
   if (typeof window !== "undefined") {
     return window.location.origin;
   }
-  return (process.env.NEXT_PUBLIC_APP_ORIGIN ?? "http://localhost:3001").replace(/\/$/, "");
+  return (import.meta.env.VITE_APP_ORIGIN ?? "http://localhost:3001").replace(/\/$/, "");
 }
 
 export type AccountType = "affiliate" | "merchant";

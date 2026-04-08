@@ -1,8 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { Link, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { oauthStartUrl } from "@/lib/auth-urls";
 import { fetchJson } from "@/lib/api";
@@ -15,7 +14,7 @@ type ValidateResponse = {
 };
 
 export function JoinInviteClient({ token }: { token: string }) {
-  const sp = useSearchParams();
+  const [sp] = useSearchParams();
   const { token: bearer, loading: authLoading } = useAccessToken();
   const [inv, setInv] = useState<ValidateResponse | null>(null);
   const [err, setErr] = useState<string | null>(null);

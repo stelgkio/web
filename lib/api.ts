@@ -1,5 +1,5 @@
 const apiBase = () =>
-  (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080").replace(/\/$/, "");
+  (import.meta.env.VITE_API_URL ?? "http://localhost:8080").replace(/\/$/, "");
 
 export function apiUrl(path: string) {
   const p = path.startsWith("/") ? path : `/${path}`;

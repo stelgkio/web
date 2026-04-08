@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 import { DevTokenBar } from "@/components/dev-token";
 import { useAccessToken } from "@/hooks/use-access-token";
 import { fetchJson } from "@/lib/api";

@@ -1,10 +1,10 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 function AuthCallbackInner() {
-  const router = useRouter();
-  const sp = useSearchParams();
+  const navigate = useNavigate();
+  const [sp] = useSearchParams();
 
   useEffect(() => {
     const token = sp.get("token");
@@ -12,8 +12,8 @@ function AuthCallbackInner() {
       window.localStorage.setItem("affilflow_jwt", token);
       window.dispatchEvent(new Event("affilflow-token"));
     }
-    router.replace("/");
-  }, [router, sp]);
+    navigate("/", { replace: true });
+  }, [navigate, sp]);
 
   return (
     <main className="mx-auto max-w-lg flex-1 px-4 py-16">

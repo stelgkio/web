@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 import { DevTokenBar } from "@/components/dev-token";
 import { useAccessToken } from "@/hooks/use-access-token";
 import { fetchJson } from "@/lib/api";
@@ -111,7 +111,7 @@ export function AffiliateDashboardClient() {
             <CardContent>
               {data.programs.length === 0 ? (
                 <p className="text-sm text-muted-foreground">
-                  No affiliate profiles yet. Join a program from the directory or accept an invite link.
+                  No affiliate profiles yet. Join a campaign from the campaigns page or accept an invite link.
                 </p>
               ) : (
                 <div className="overflow-x-auto">

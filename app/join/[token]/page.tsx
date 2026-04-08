@@ -1,9 +1,11 @@
 import { Suspense } from "react";
-import Link from "next/link";
+import { Link, useParams } from "react-router-dom";
 import { JoinInviteClient } from "./join-client";
 
-export default async function JoinPage({ params }: { params: Promise<{ token: string }> }) {
-  const { token } = await params;
+export default function JoinPage() {
+  const { token } = useParams();
+  const inviteToken = token ?? "";
+
   return (
     <main className="mx-auto w-full max-w-lg flex-1 px-4 py-16">
       <Link href="/" className="text-sm text-muted-foreground hover:underline">
@@ -15,7 +17,7 @@ export default async function JoinPage({ params }: { params: Promise<{ token: st
       </p>
       <div className="mt-8">
         <Suspense fallback={<p className="text-sm text-muted-foreground">Loading…</p>}>
-          <JoinInviteClient token={token} />
+          <JoinInviteClient token={inviteToken} />
         </Suspense>
       </div>
     </main>

@@ -1,8 +1,7 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -24,7 +23,7 @@ function persistToken(token: string) {
 }
 
 export function RegisterClient() {
-  const router = useRouter();
+  const navigate = useNavigate();
   const [accountType, setAccountType] = useState<AccountType>("affiliate");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -52,8 +51,7 @@ export function RegisterClient() {
         body: JSON.stringify(body),
       });
       persistToken(res.access_token);
-      router.replace("/");
-      router.refresh();
+      navigate("/", { replace: true });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Registration failed");
     } finally {

@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,7 +22,9 @@ function persistToken(token: string) {
 }
 
 export function LoginForm() {
-  const router = useRouter();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const returnTo = searchParams.get("returnTo");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -39,8 +40,9 @@ export function LoginForm() {
         body: JSON.stringify({ email: email.trim(), password }),
       });
       persistToken(res.access_token);
-      router.replace("/");
-      router.refresh();
+      const next =
+        returnTo && returnTo.startsWith("/") && !returnTo.startsWith("//") ? returnTo : "/";
+      navigate(next, { replace: true });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Sign-in failed");
     } finally {
