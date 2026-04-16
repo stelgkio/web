@@ -1,5 +1,5 @@
-import { CompanyDashboardClient } from "./company-dashboard-client";
+import { Navigate } from "react-router-dom";
 
-export default function CompanyDashboardPage() {
-  return <CompanyDashboardClient />;
+export default function CompanyDashboardRedirectPage() {
+  return <Navigate to="/company/overview" replace />;
 }

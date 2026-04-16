@@ -9,7 +9,7 @@ import { useAccessToken } from "@/hooks/use-access-token";
 
 type ValidateResponse = {
   valid: boolean;
-  organization_id: string;
+  campain_id: string;
   expires_at: string;
 };
 
@@ -97,14 +97,14 @@ export function JoinInviteClient({ token }: { token: string }) {
   return (
     <div className="space-y-6">
       <p className="text-sm text-muted-foreground">
-        Organization ID: <code className="rounded bg-muted px-1 text-xs">{inv.organization_id}</code>
+        Campain ID: <code className="rounded bg-muted px-1 text-xs">{inv.campain_id}</code>
       </p>
       <p className="text-xs text-muted-foreground">Expires: {new Date(inv.expires_at).toLocaleString()}</p>
 
       {done ? (
         <p className="text-sm font-medium text-green-700 dark:text-green-400">
           You&apos;re in. Open your{" "}
-          <Link href="/affiliate/dashboard" className="underline">
+          <Link to="/affiliate/dashboard" className="underline">
             partner dashboard
           </Link>
           .

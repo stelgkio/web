@@ -10,8 +10,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 type Program = {
-  organization_id: string;
-  organization_name: string;
+  campain_id: string;
+  campain_name: string;
   accrued_cents: number;
   paid_cents: number;
   attributed_orders: number;
@@ -62,7 +62,7 @@ export function AffiliateDashboardClient() {
   return (
     <div className="mx-auto max-w-5xl space-y-8 p-6">
       <div>
-        <Link href="/" className="text-sm text-muted-foreground hover:underline">
+        <Link to="/" className="text-sm text-muted-foreground hover:underline">
           ← Home
         </Link>
         <h1 className="mt-2 text-2xl font-semibold tracking-tight">Affiliate earnings</h1>
@@ -106,7 +106,7 @@ export function AffiliateDashboardClient() {
           <Card>
             <CardHeader>
               <CardTitle>By program</CardTitle>
-              <CardDescription>Organizations you promote — your referral code and attributed performance</CardDescription>
+              <CardDescription>Campains you promote — your referral code and attributed performance</CardDescription>
             </CardHeader>
             <CardContent>
               {data.programs.length === 0 ? (
@@ -127,8 +127,8 @@ export function AffiliateDashboardClient() {
                     </thead>
                     <tbody>
                       {data.programs.map((p) => (
-                        <tr key={p.organization_id} className="border-b border-border/50">
-                          <td className="py-3 pr-4 font-medium">{p.organization_name}</td>
+                        <tr key={p.campain_id} className="border-b border-border/50">
+                          <td className="py-3 pr-4 font-medium">{p.campain_name}</td>
                           <td className="py-3 pr-4 font-mono text-xs">{p.referral_code}</td>
                           <td className="py-3 pr-4 tabular-nums">{p.attributed_orders}</td>
                           <td className="py-3 pr-4 tabular-nums">{formatEur(p.accrued_cents)}</td>

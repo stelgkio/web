@@ -163,11 +163,11 @@ export function HomeLanding() {
                   </li>
                 </ul>
                 <div className="flex flex-wrap gap-2 pt-2">
-                  <Link to="/company/dashboard" className={cn(buttonVariants(), "gap-1.5 shadow-md shadow-primary/15")}>
+                  <Link to="/company/overview" className={cn(buttonVariants(), "gap-1.5 shadow-md shadow-primary/15")}>
                     Company dashboard
                     <ArrowRight className="size-4" />
                   </Link>
-                  <Link to="/admin/invite" className={cn(buttonVariants({ variant: "outline" }), "border-border/80")}>
+                  <Link to="/company/invites" className={cn(buttonVariants({ variant: "outline" }), "border-border/80")}>
                     Invite a partner
                   </Link>
                 </div>

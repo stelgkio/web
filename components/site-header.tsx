@@ -6,11 +6,15 @@ import { buttonVariants } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { cn } from "@/lib/utils";
 import { useAccessToken } from "@/hooks/use-access-token";
+import { useAuthRoles } from "@/hooks/use-auth-roles";
 
 export function SiteHeader() {
   const { token, loading } = useAccessToken();
+  const { roles, loading: rolesLoading } = useAuthRoles(token, loading);
   const navigate = useNavigate();
   const authed = Boolean(token);
+  const isMerchant = roles.includes("merchant");
+  const isAffiliate = roles.includes("affiliate");
 
   function signOut() {
     if (typeof window !== "undefined") {
@@ -51,18 +55,22 @@ export function SiteHeader() {
           >
             Campaigns
           </Link>
-          <Link
-            to="/company/dashboard"
-            className="rounded-md px-3 py-2 transition-colors hover:bg-muted hover:text-foreground"
-          >
-            Merchant app
-          </Link>
-          <Link
-            to="/affiliate/dashboard"
-            className="rounded-md px-3 py-2 transition-colors hover:bg-muted hover:text-foreground"
-          >
-            Partner app
-          </Link>
+          {!loading && authed && !rolesLoading && isMerchant ? (
+            <Link
+              to="/company/overview"
+              className="rounded-md px-3 py-2 transition-colors hover:bg-muted hover:text-foreground"
+            >
+              Merchant app
+            </Link>
+          ) : null}
+          {!loading && authed && !rolesLoading && isAffiliate ? (
+            <Link
+              to="/affiliate/dashboard"
+              className="rounded-md px-3 py-2 transition-colors hover:bg-muted hover:text-foreground"
+            >
+              Partner app
+            </Link>
+          ) : null}
         </nav>
         <div className="flex items-center gap-1 sm:gap-2">
           <ThemeToggle />

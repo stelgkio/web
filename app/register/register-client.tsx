@@ -13,7 +13,7 @@ type RegisterResponse = {
   access_token: string;
   user_id: string;
   roles: string[];
-  organization_id?: string;
+  campain_id?: string;
 };
 
 function persistToken(token: string) {
@@ -95,7 +95,7 @@ export function RegisterClient() {
             />
             <span className="text-sm">
               <span className="font-medium">Run a company program</span>
-              <span className="block text-muted-foreground">Merchant dashboard (admin)</span>
+              <span className="block text-muted-foreground">Merchant dashboard (merchant)</span>
             </span>
           </label>
         </div>
@@ -201,12 +201,12 @@ export function RegisterClient() {
 
       <p className="text-center text-sm text-muted-foreground">
         Already have an account?{" "}
-        <Link href="/login" className="text-primary underline-offset-4 hover:underline">
+        <Link to="/login" className="text-primary underline-offset-4 hover:underline">
           Log in
         </Link>
       </p>
       <p className="text-center text-sm">
-        <Link href="/" className="text-muted-foreground hover:text-foreground">
+        <Link to="/" className="text-muted-foreground hover:text-foreground">
           ← Back home
         </Link>
       </p>

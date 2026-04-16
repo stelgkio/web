@@ -6,6 +6,8 @@ type Campaign = {
   id: string;
   name: string;
   slug: string | null;
+  tagline?: string | null;
+  default_commission_rate?: number;
   approval_mode: "open" | "request_to_join" | "invite_only";
   discovery_enabled: boolean;
 };
@@ -53,7 +55,7 @@ export default function CampaignsPage() {
       <div className="space-y-4">
         {campaigns.length === 0 ? (
           <p className="text-sm text-muted-foreground">
-            No public campaigns yet — start the API or seed discoverable organizations.
+            No public campaigns yet — start the API or seed discoverable campains.
           </p>
         ) : (
           campaigns.map((campaign) => {
@@ -65,8 +67,12 @@ export default function CampaignsPage() {
                 className="block rounded-lg border p-4 transition-colors hover:bg-muted/50"
               >
                 <h2 className="text-lg font-medium">{campaign.name}</h2>
+                {campaign.tagline ? <p className="mt-1 text-sm text-muted-foreground">{campaign.tagline}</p> : null}
                 <p className="mt-1 text-sm text-muted-foreground">
                   Slug: {campaign.slug ?? "n/a"} | Approval: {campaign.approval_mode.replace(/_/g, " ")}
+                  {typeof campaign.default_commission_rate === "number"
+                    ? ` | Default commission: ${Math.round(campaign.default_commission_rate * 10000) / 100}%`
+                    : null}
                 </p>
                 <p className="mt-2 text-sm">
                   Visibility: {campaign.discovery_enabled ? "public" : "private"}

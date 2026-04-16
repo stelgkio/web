@@ -8,7 +8,7 @@ export default function JoinPage() {
 
   return (
     <main className="mx-auto w-full max-w-lg flex-1 px-4 py-16">
-      <Link href="/" className="text-sm text-muted-foreground hover:underline">
+      <Link to="/" className="text-sm text-muted-foreground hover:underline">
         ← Home
       </Link>
       <h1 className="mt-4 text-2xl font-semibold tracking-tight">Campaign invite</h1>

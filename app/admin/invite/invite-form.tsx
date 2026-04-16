@@ -31,12 +31,12 @@ export function InviteForm() {
   async function createInvite() {
     const token = getStoredToken();
     if (!token) {
-      setErr("Set an API token first.");
+      setErr("Sign in to create invites (your session JWT is used automatically).");
       return;
     }
     const id = orgId.trim();
     if (!id) {
-      setErr("Organization UUID is required.");
+      setErr("Campain UUID is required.");
       return;
     }
     setLoading(true);
@@ -46,7 +46,7 @@ export function InviteForm() {
       const body: { email?: string } = {};
       if (email.trim()) body.email = email.trim();
       const res = await fetchJson<CreateInviteResponse>(
-        `/api/v1/organizations/${encodeURIComponent(id)}/invites`,
+        `/api/v1/campains/${encodeURIComponent(id)}/invites`,
         {
           method: "POST",
           token,
@@ -70,7 +70,7 @@ export function InviteForm() {
   return (
     <div className="space-y-4 max-w-md">
       <div className="space-y-2">
-        <Label htmlFor="org">Organization ID</Label>
+        <Label htmlFor="org">Campain ID</Label>
         <Input
           id="org"
           value={orgId}

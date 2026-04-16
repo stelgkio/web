@@ -8,10 +8,16 @@ import { oauthStartUrl } from "@/lib/auth-urls";
 import { useAccessToken } from "@/hooks/use-access-token";
 
 type CampaignDetail = {
-  organization: {
+  campain: {
     id: string;
     name: string;
     slug: string | null;
+    tagline?: string | null;
+    description?: string | null;
+    brand_website_url?: string | null;
+    terms_url?: string | null;
+    default_commission_rate: number;
+    attribution_window_days: number;
     approval_mode: "open" | "request_to_join" | "invite_only";
     discovery_enabled: boolean;
   };
@@ -90,7 +96,7 @@ export function CampaignDetailClient() {
     setApplying(true);
     setApplyError(null);
     try {
-      await fetchJson<void>(`/api/v1/campaigns/${data.organization.id}/apply`, {
+      await fetchJson<void>(`/api/v1/campaigns/${data.campain.id}/apply`, {
         method: "POST",
         token,
         body: JSON.stringify({}),
@@ -122,7 +128,7 @@ export function CampaignDetailClient() {
     return <p className="text-sm text-muted-foreground">Loading…</p>;
   }
 
-  const { organization: o, stats, top_partners } = data;
+  const { campain: o, stats, top_partners } = data;
   const loginReturn = `/login?returnTo=${encodeURIComponent(`/campaigns/${ref}`)}`;
   const canApply = o.approval_mode === "open" || o.approval_mode === "request_to_join";
   const authed = Boolean(token);
@@ -134,10 +140,77 @@ export function CampaignDetailClient() {
           ← All campaigns
         </Link>
         <h1 className="text-2xl font-semibold tracking-tight">{o.name}</h1>
-        <p className="text-muted-foreground text-sm">
+        {o.tagline ? <p className="text-muted-foreground text-sm">{o.tagline}</p> : null}
+        <p className="mt-1 text-muted-foreground text-sm">
           Partner onboarding: <span className="text-foreground">{approvalLabel(o.approval_mode)}</span>
         </p>
       </div>
+
+      {o.description || o.brand_website_url || o.terms_url ? (
+        <section className="rounded-lg border p-4 space-y-3">
+          <h2 className="text-sm font-medium text-muted-foreground">About this campaign</h2>
+          {o.description ? (
+            <p className="text-sm text-foreground whitespace-pre-wrap">{o.description}</p>
+          ) : null}
+          <dl className="grid gap-2 text-sm sm:grid-cols-2">
+            <div>
+              <dt className="text-xs text-muted-foreground">Default commission (new partners)</dt>
+              <dd className="font-medium tabular-nums">
+                {typeof o.default_commission_rate === "number"
+                  ? `${Math.round(o.default_commission_rate * 10000) / 100}% of referred order totals`
+                  : "—"}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-xs text-muted-foreground">Attribution window</dt>
+              <dd className="font-medium">{o.attribution_window_days ?? 30} days (policy)</dd>
+            </div>
+            {o.brand_website_url ? (
+              <div className="sm:col-span-2">
+                <dt className="text-xs text-muted-foreground">Brand</dt>
+                <dd>
+                  <a
+                    href={o.brand_website_url}
+                    className="text-primary underline-offset-4 hover:underline break-all"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {o.brand_website_url}
+                  </a>
+                </dd>
+              </div>
+            ) : null}
+            {o.terms_url ? (
+              <div className="sm:col-span-2">
+                <dt className="text-xs text-muted-foreground">Program terms</dt>
+                <dd>
+                  <a
+                    href={o.terms_url}
+                    className="text-primary underline-offset-4 hover:underline break-all"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {o.terms_url}
+                  </a>
+                </dd>
+              </div>
+            ) : null}
+          </dl>
+        </section>
+      ) : (
+        <section className="rounded-lg border border-dashed p-4 text-sm text-muted-foreground">
+          <p>
+            Default commission for new partners:{" "}
+            <span className="font-medium text-foreground tabular-nums">
+              {typeof o.default_commission_rate === "number"
+                ? `${Math.round(o.default_commission_rate * 10000) / 100}%`
+                : "10%"}{" "}
+            </span>
+            · Attribution window:{" "}
+            <span className="font-medium text-foreground">{o.attribution_window_days ?? 30} days</span>
+          </p>
+        </section>
+      )}
 
       <section className="rounded-lg border p-4">
         <h2 className="text-sm font-medium text-muted-foreground">How it&apos;s going</h2>

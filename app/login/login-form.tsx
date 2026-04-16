@@ -108,12 +108,12 @@ export function LoginForm() {
       </div>
       <p className="mt-10 text-center text-sm text-muted-foreground">
         New here?{" "}
-        <Link href="/register" className="text-primary underline-offset-4 hover:underline">
+        <Link to="/register" className="text-primary underline-offset-4 hover:underline">
           Create an account
         </Link>
       </p>
       <p className="mt-4 text-center text-sm">
-        <Link href="/" className="text-muted-foreground hover:text-foreground">
+        <Link to="/" className="text-muted-foreground hover:text-foreground">
           ← Back home
         </Link>
       </p>
